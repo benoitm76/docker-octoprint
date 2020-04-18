@@ -24,13 +24,12 @@ script:
 
 deploy:
   provider: script
-  script: >-
-    docker buildx build \
-      --platform $PLATFORMS \
-      --build-arg "VERSION=$TRAVIS_BRANCH" \
-      --file "Dockerfile" \
-      --tag benoitm76/octoprint:$TRAVIS_BRANCH \
-      --push \
-      .
+  script: 'docker buildx build
+    --platform $PLATFORMS
+    --build-arg "VERSION=$TRAVIS_BRANCH"
+    --file "Dockerfile"
+    --tag benoitm76/octoprint:$TRAVIS_BRANCH
+    --push
+    .'
   on:
     branch: master
