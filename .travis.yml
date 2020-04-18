@@ -9,9 +9,9 @@ env:
 
 script:
   - echo "$DOCKER_PASSWORD" | docker login -u benoitm76 --password-stdin
-    - docker run --privileged linuxkit/binfmt:v0.7
-    - docker buildx create --use
-    - docker buildx build
+  - docker run --privileged linuxkit/binfmt:v0.7
+  - docker buildx create --use
+  - docker buildx build
     --platform $PLATFORMS
     --build-arg "VERSION=$TRAVIS_BRANCH"
     --file "Dockerfile"
