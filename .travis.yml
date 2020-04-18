@@ -11,14 +11,25 @@ env:
     - DOCKER_CLI_EXPERIMENTAL=enabled
     - PLATFORMS=linux/arm/v7
 
-script:
-  - echo "$DOCKER_PASSWORD" | docker login -u benoitm76 --password-stdin
-  - docker run --privileged linuxkit/binfmt:v0.7
-  - docker buildx create --use
-  - docker buildx build
-    --platform $PLATFORMS
-    --build-arg "VERSION=$TRAVIS_BRANCH"
-    --file "Dockerfile"
-    --tag benoitm76/octoprint:$TRAVIS_BRANCH
-    --push
-    .
+jobs:
+  include:
+    - stage: Build
+      script:
+        - echo "$DOCKER_PASSWORD" | docker login -u benoitm76 --password-stdin
+          - docker run --privileged linuxkit/binfmt:v0.7
+          - docker buildx create --use
+          - docker buildx build
+          --platform $PLATFORMS
+          --build-arg "VERSION=$TRAVIS_BRANCH"
+          --file "Dockerfile"
+          --tag benoitm76/octoprint:$TRAVIS_BRANCH
+          .
+    - stage: Push
+      script:
+        - docker buildx build
+          --platform $PLATFORMS
+          --build-arg "VERSION=$TRAVIS_BRANCH"
+          --file "Dockerfile"
+          --tag benoitm76/octoprint:$TRAVIS_BRANCH
+          --push
+          .
