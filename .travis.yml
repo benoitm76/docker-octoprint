@@ -32,4 +32,4 @@ deploy:
     --push
     .'
   on:
-    branch: master
+    condition: tag IS present OR branch = master
