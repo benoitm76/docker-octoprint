@@ -32,4 +32,5 @@ deploy:
     --push
     .'
   on:
-    condition: tag IS present OR branch = master
+    all_branches: true
+    condition: $TRAVIS_BRANCH = master || -n "$TRAVIS_TAG"
